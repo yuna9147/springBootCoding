@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boot.example.mapper.StudentMapper">
+    <resultMap id="studentResult" type="com.boot.example.domain.Student">
+        <id column="sd_num" property="studentNum"/>
+        <result column="sd_name" property="studentName"/>
+        <result column="sd_id" property="studentId"/>
+        <result column="s_num" property="subjectNum"/>
+        <result column="sd_birth" property="studentBirthday"/>
+        <result column="sd_phone" property="studentPhone"/>
+        <result column="sd_address" property="studentAddress"/>
+        <result column="sd_email" property="studentEmail"/>
+    </resultMap>
+
+    <select id="studentList" resultMap="studentResult">
+        SELECT
+        no,sd_num,sd_name,sd_id,s_num,sd_birth,sd_phone,sd_address,sd_email
+        FROM student
+        ORDER BY no
+    </select>
+</mapper>
