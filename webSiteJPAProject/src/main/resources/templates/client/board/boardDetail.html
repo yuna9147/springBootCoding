@@ -6,61 +6,48 @@
     <div class="text-center"><h3>게시판 상세</h3></div>
 
     <div class="container" th:object="${detail}">
-        <div>
-            <form name="dataForm" id="dataForm" method="post">
-                <input type="hidden" name="boardNumber" th:value="*{boardNumber}"/>
+        <div class="board-table-height">
+            <form id="dataForm">
+                <input type="hidden" name="no" th:value="*{no}" />
             </form>
 
             <table class="table table-bordered">
-                <tbody>
+                <tbody class="text-center">
                 <tr>
                     <td class="col-md-3">작성자</td>
-                    <td class="col-md-3 text-start" th:text="*{boardName}+' (조회수: '+*{boardReadcnt}+')'"></td>
+                    <td class="col-md-3 text-start" th:text="*{name} + ' (조회수: ' + *{hit} + ')'"></td>
                     <td class="col-md-3">작성일</td>
-                    <td class="col-md-3 text-start" th:text="*{boardDate}"></td>
+                    <td class="col-md-3 text-start" th:text="*{#temporals.format(regDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
                 </tr>
                 <tr>
                     <td class="col-md-3">글제목</td>
-                    <td colspan="3" class="col-md-9 text-start" th:text="*{boardTitle}"></td>
+                    <td colspan="3" class="col-md-9 text-start" th:text="*{title}"></td>
                 </tr>
-                <tr>
-
-                    <td class="col-md-3 board-table-tr-height">글내용</td>
-                    <td colspan="3" class="col-md-9 text-start" th:utext="*{boardContent}"></td>
+                <tr class="board-table-tr-height">
+                    <td class="col-md-3 align-middle">글내용</td>
+                    <td colspan="3" class="col-md-9 text-start" th:utext="${#strings.replace(detail.content, newLine, '&lt;br /&gt;')}"></td>
                 </tr>
                 </tbody>
             </table>
         </div>
 
         <div class="row text-center mb-2">
-            <div class="col-md-7 text-start" id="pwdFormArea">
-                <form id="pwdForm" class="row g-3">
-                    <input type="hidden" th:field="*{boardNumber}"/>
-                    <div class="col-auto">
-                        <label for="boardPasswd" class="visually-hidden">비밀번호</label>
-                        <input type="password" class="form-control form-control-sm" th:field="*{boardPasswd}" placeholder="비밀번호 입력"/>
-                    </div>
-                    <div class="col-auto">
-                        <button type="button" id="passwdBtn" class="btn btn-secondary btn-sm">확인</button>
-                        <button type="button" id="passwdCancelBtn" class="btn btn-secondary btn-sm">취소</button>
-                    </div>
-                    <div class="col-auto">
-                        <span id="message" class="align-middle"></span>
-                    </div>
-                </form>
+            <div class="col-md-9 text-start" id="pwdFormArea">
+
             </div>
 
-            <div class="col-md-5 text-end">
-                <button type="button" id="updateFormBtn" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i>글수정</button>
-                <button type="button" id="boardDeleteBtn" class="btn btn-primary btn-sm">  <i class="fas fa-trash"></i>글삭제</button>
-                <button type="button" id="insertFormBtn" class="btn btn-primary btn-sm"><i class="fas fa-pen"></i>글쓰기</button>
-                <button type="button" id="boardListBtn" class="btn btn-primary btn-sm"><i class="fas fa-list-ul"></i>글목록</button>
+            <div class="col-md-3 text-end">
+                <button type="button" id="updateFormBtn" class="btn btn-primary btn-sm">글수정</button>
+                <button type="button" id="boardDeleteBtn" class="btn btn-primary btn-sm">글삭제</button>
+                <button type="button" id="insertFormBtn" class="btn btn-primary btn-sm">글쓰기</button>
+                <button type="button" id="boardListBtn" class="btn btn-primary btn-sm">글목록</button>
             </div>
         </div>
     </div>
 </th:block>
 
 <th:block layout:fragment="script">
+    <script src="/js/board/boardCommon.js"></script>
     <script src="/js/board/boardDetail.js"></script>
 </th:block>
 </html>
