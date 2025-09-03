@@ -1,0 +1,53 @@
+/* 공통 적용 스타일*/
+textarea { resize: none; }
+
+/* 게시판 적용 스타일 */
+.board-table-tr-height{ height:300px; color:pink;}
+.board-table-height{ height:auto; max-height:500px;}
+.board-msg-default-color{ color:#000099; }
+.board-msg-error-color{ color:red; }
+.board-required{ color:seagreen; font-weight:bold; background:yellow; }
+.btn-sm i { margin-right: 4px; }
+
+.board-table-height thead th{background:#70809063;}
+#pwdForm input.form-control {
+    width: 160px;
+    border-radius: 8px;
+    border: 1px solid #94a3b8;
+}
+#pwdForm button {
+    margin-left: 5px;
+    border-radius: 8px;
+}
+
+/* ---------- 전체 배경 및 글자 ---------- */
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #f0f2f5;
+    color: #333;
+}
+
+.table {
+    background-color: #f8f9f4; /* 연한 카키톤 */
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.table td, .table th {
+    vertical-align: middle !important;
+    padding: 12px 15px;
+    border-color: #d1d5db;
+}
+
+/* 글내용 높이와 줄바꿈 */
+.board-table-tr-height {
+    min-height: 200px;
+    vertical-align: top;
+}
+
+td[colspan="3"][th\\:utext] {
+    white-space: pre-wrap;
+    line-height: 1.7;
+    color: #374151;
+}

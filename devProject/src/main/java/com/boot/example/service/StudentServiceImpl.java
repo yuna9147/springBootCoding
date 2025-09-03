@@ -38,6 +38,6 @@ public class StudentServiceImpl implements StudentService{
 
     @Override
     public void studentDelete(Student student){
-        studentMapper.studentDelete(student);
+        studentMapper.studentDelete(student.getStudentNumber());
     }
 }

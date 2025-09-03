@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>학과 정보 조회</title>
+    </head>
+    <body>
+        <button type="button" id="subjectAllListBtn">학과 정보 조회</button>
+        <section>
+            <table>
+                <thead>
+                    <tr>
+                        <th>번호</th>
+                        <th>학과번호</th>
+                        <th>학과명</th>
+                    </tr>
+                </thead>
+                <tbody id="subjectList">
+
+                </tbody>
+            </table>
+        </section>
+        <script>
+            document.getElementById("subjectAllListBtn").addEventListener("click",function() {
+                fetch("subject/subjectAllList")
+                .then(response => response.json())
+                .then(data => {
+                    let subjectList = document.getElementById("subjectList");
+                    subjectList.textContent = "";
+
+                    if(data.length === 0 ) {
+                    subjectList.textContent = "<tr><td colspan='3'>등록된 학과 정보가 없습니다.</td></tr>";
+                    } else {
+                        data.forEach((subject) => {
+                        const tr = document.createElement("tr");
+
+                        const tdNo = document.createElement("td");
+                        tdNo.textContent = subject.no;
+
+                        const tdNumber = document.createElement("td");
+                        tdNumber.textContent = subject.subjectNumber;
+
+                        const tdName = document.createElement("td");
+                        tdName.textContent = subject.subjectName;
+
+                        tr.appendChild(tdNo);
+                        tr.appendChild(tdNumber);
+                        tr.appendChild(tdName);
+
+                        subjectList.appendChild(tr);
+                        });
+                    }
+                })
+                .catch(error => console.error('Error:',error));
+            });
+        </script>
+    </body>
+</html>
