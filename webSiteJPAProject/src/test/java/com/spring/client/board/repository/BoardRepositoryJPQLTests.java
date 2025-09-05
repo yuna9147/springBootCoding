@@ -56,7 +56,7 @@ public class BoardRepositoryJPQLTests {
     @Test
     public void boardListAllTest() {
         List<Board> boardAllList = boardRepository.boardAllList();
-        boardAllList.forEach(board -> log.info(board.toString());
+        boardAllList.forEach(board -> log.info(board.toString()));
     }
 
 }

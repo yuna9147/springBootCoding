@@ -6,6 +6,13 @@
 <th:block layout:fragment="content">
     <div class="text-center"><h3>게시판 리스트</h3></div>
 
+    <div id = "boardSearch" class="my-2">
+        <form id ="searchForm">
+            <input type = "hidden" name="page" id="page" th:value="${boardList.pageRequestDTO.page}">
+            <input type="hidden" name="size" id="size" th:value="${boardList.pageRequestDTO.size}">
+        </form>
+    </div>
+
     <div class="board-table-height">
         <table class="table table-hover">
             <thead>
@@ -19,13 +26,15 @@
             </thead>
             <tbody class="list">
             <tr th:if="${#lists.size(boardList)==0}">
-                <td colspan="5" class="text-center">등록된 게시물이 존재하지 않습니다.</td>
+                <td colspan="5" class="text-center">0등록된 게시물이 존재하지 않습니다.</td>
             </tr>
 
-            <th:block th:if="${not #strings.isEmpty(boardList)}">
-                <tr class="text-center" th:each="board : ${boardList}" th:object="${board}"  th:data-no="*{no}">
+            <th:block th:if="${not #strings.isEmpty(boardList.dtoList)}">
+                <tr class="text-center" th:each="board : ${boardList.dtoList}" th:object="${board}"  th:data-no="*{no}">
                     <td th:text="*{no}"></td>
-                    <td class="text-start goDetail" th:text="*{title}"></td>
+                    <!--<td class="text-start goDetail" th:text="*{title}"></td>-->
+                    <td class="text-start"><a th:href="@{/board/} + *{no}" th:text="*{title}"
+                                              class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"></a></td>
                     <td class="name" th:text="*{name}"></td>
                     <td class="date" th:text="*{#temporals.format(regDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
                     <td th:text="*{hit}"></td>
@@ -38,6 +47,22 @@
     <div class="text-end">
         <button type="button" id="insertFormBtn" class="btn btn-primary btn-sm mb-2">글쓰기</button>
     </div>
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:if="${boardList.prev}">
+                <a th:data-number="${boardList.prevPage}" class="page-link" >Previous</a>
+            </li>
+
+            <li th:each="number : ${boardList.pageNumList}" th:classappend=" 'page-item ' + ${(boardList.current == number) ? 'active':''}">
+                <a class="page-link" th:text="${number}" th:data-number="${number}"></a>
+            </li>
+
+            <li class="page-item" th:if="${boardList.next}">
+                <a th:data-number="${boardList.nextPage}" class="page-link" >Next</a>
+            </li>
+        </ul>
+    </nav>
 </th:block>
 
 <th:block layout:fragment="script">

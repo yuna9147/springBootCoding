@@ -5,6 +5,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -96,4 +100,55 @@ public class BoardRepositoryTests {
     public void boardDeleteTest() {
         boardRepository.deleteById(6L);
     }
+
+   // @Test
+    public void findByTitleContainingTest() {
+       // Board titleSearch = boardRepository.findByTitle("지옥철");
+       // log.info(titleSearch.toString());
+
+
+    //제목 검색
+    //List<Board> list = boardRepository.findByTitleContaining("지옥철");
+
+    //이름 검색
+    //List<Board> list = boardRepository.findByNameContaining("하상욱");
+
+    //내용 검색
+    //List<Board> list = boardRepository.findByContentContaining("집념");
+
+    //등록일 검색
+    log.info(LocalDateTime.now().minusDays(3).toString());
+    log.info(LocalDateTime.now().toString());
+    List<Board> list = boardRepository.findByRegDateBetween(LocalDateTime.now().minusDays(3), LocalDateTime.now());
+    list.forEach(board -> log.info(board.toString()));
+    }
+
+    //@Test
+    public void findByOrderByNoDescTest() {
+
+        List<Board> boardList = boardRepository.findByOrderByNoDesc();
+        boardList.forEach(board -> log.info(board.toString()));
+    }
+
+    //@Test
+    public void findAllByPageAndSort() {
+        Pageable pageable = PageRequest.of(0, 10, Sort.Direction.DESC, "no");
+        Page<Board> result = boardRepository.findByTitleContaining("지옥철", pageable);
+        result.forEach(board -> log.info(board.toString()));
+    }
+
+    @Test
+    public void boardAllInsertTest() {
+        for(int i=1; i<= 100; i++) {
+            Board board = new Board();
+            board.setTitle("Title..." + i);
+            board.setName("홍길동" + i);
+            board.setContent("실패한 자가 패배하는 것이 아니라 포기한 자가 패배하는 것이다.");
+            boardRepository.save(board);
+
+        }
+    }
+
 }
+
+

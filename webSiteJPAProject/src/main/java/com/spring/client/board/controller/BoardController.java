@@ -2,6 +2,8 @@ package com.spring.client.board.controller;
 
 import com.spring.client.board.domain.Board;
 import com.spring.client.board.service.BoardService;
+import com.spring.common.dto.PageRequestDTO;
+import com.spring.common.dto.PageResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,13 +22,19 @@ public class BoardController {
     public final BoardService boardService;
 
     @GetMapping("/boardList")
-    public String boardList(Board board, Model model){
-        List<Board> boardList = boardService.boardList(board);
-        boardList.sort(Comparator.comparing(Board::getNo).reversed());
-        model.addAttribute("boardList",boardList);
+    public String boardList(Board board, PageRequestDTO pageRequestDTO, Model model) {
+        PageResponseDTO<Board> boardList = boardService.list(pageRequestDTO);
+        model.addAttribute("boardList", boardList);
 
         return "client/board/boardList";
     }
+//    public String boardList(Board board, Model model){
+//        List<Board> boardList = boardService.boardList(board);
+//        boardList.sort(Comparator.comparing(Board::getNo).reversed());
+//        model.addAttribute("boardList",boardList);
+//
+//        return "client/board/boardList";
+//    }
 
     @GetMapping("/insertForm")
     public String insertForm(Board board) {

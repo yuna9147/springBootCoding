@@ -2,8 +2,8 @@
 textarea { resize: none; }
 
 /* 게시판 적용 스타일 */
-.board-table-tr-height{ height:300px; color:pink;}
-.board-table-height{ height:auto; max-height:500px;}
+.board-table-tr-height{ height:300px; color:#000099;}
+.board-table-height{ height:auto; max-height:800px;}
 .board-msg-default-color{ color:#000099; }
 .board-msg-error-color{ color:red; }
 .board-required{ color:seagreen; font-weight:bold; background:yellow; }
@@ -42,7 +42,7 @@ body {
 
 /* 글내용 높이와 줄바꿈 */
 .board-table-tr-height {
-    min-height: 200px;
+    min-height: 700px;
     vertical-align: top;
 }
 
