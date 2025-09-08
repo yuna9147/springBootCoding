@@ -2,8 +2,8 @@
 textarea { resize: none; }
 
 /* 게시판 적용 스타일 */
-.board-table-tr-height{ height:300px; color:#000099;}
-.board-table-height{ height:auto; max-height:800px;}
+.board-table-tr-height{ height:500px; color:#000099;}
+.board-table-height{ height:500px; }
 .board-msg-default-color{ color:#000099; }
 .board-msg-error-color{ color:red; }
 .board-required{ color:seagreen; font-weight:bold; background:yellow; }
@@ -28,10 +28,12 @@ body {
 }
 
 .table {
-    background-color: #f8f9f4; /* 연한 카키톤 */
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    width: 100%;
+        border-collapse: collapse;
+        background-color: #fff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.08);
 }
 
 .table td, .table th {
@@ -50,4 +52,25 @@ td[colspan="3"][th\\:utext] {
     white-space: pre-wrap;
     line-height: 1.7;
     color: #374151;
+}
+
+.board-table-height { height: auto; min-height:500px;}
+
+/* 이미지 행 */
+.board-table-tr-height img {
+    max-width: 400px;
+    height: auto;
+    display: block;
+    margin: 15px auto;
+    border-radius: 10px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+}
+
+
+.text-end {
+    margin-top: 15px;
+}
+
+.pagination {
+    margin-top: 20px;
 }

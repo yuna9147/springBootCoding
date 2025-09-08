@@ -4,22 +4,21 @@ import com.spring.client.board.domain.Board;
 import com.spring.client.board.service.BoardService;
 import com.spring.common.dto.PageRequestDTO;
 import com.spring.common.dto.PageResponseDTO;
+import com.spring.common.util.CustomFileUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Comparator;
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/board/*")
 public class BoardController {
     public final BoardService boardService;
+    private final CustomFileUtil fileUtil;
 
     @GetMapping("/boardList")
     public String boardList(Board board, PageRequestDTO pageRequestDTO, Model model) {
@@ -40,9 +39,19 @@ public class BoardController {
     public String insertForm(Board board) {
         return "client/board/insertForm";
     }
+    //게시글만 입력
+//    @PostMapping("/boardInsert")
+//    public String boardInsert(Board board) {
+//        boardService.boardInsert(board);
+//        return "redirect:/board/boardList";
+//    }
 
     @PostMapping("/boardInsert")
     public String boardInsert(Board board) {
+        if(!board.getFile().isEmpty()) {
+            String uploadFileName = fileUtil.saveFile(board.getFile());
+            board.setFilename(uploadFileName);
+        }
         boardService.boardInsert(board);
         return "redirect:/board/boardList";
     }
@@ -70,15 +79,46 @@ public class BoardController {
         return "client/board/updateForm";
     }
 
-    @PostMapping("boardUpdate")
+//    @PostMapping("boardUpdate")
+//    public String boardUpdate(Board board) {
+//        boardService.boardUpdate(board);
+//        return "redirect:/board"+board.getNo();
+//    }
+
+    @PostMapping("/boardUpdate")
     public String boardUpdate(Board board) {
+        Board updateData = boardService.getBoard(board.getNo());
+
+        if(!board.getFile().isEmpty()) {
+            if(updateData.getFilename()!=null){
+                fileUtil.deleteFile(updateData.getFilename());
+            }
+            String uploadFileName = fileUtil.saveFile(board.getFile());
+            board.setFilename(uploadFileName);
+        }
         boardService.boardUpdate(board);
-        return "redirect:/board"+board.getNo();
+        return "redirect:/board/"+board.getNo();
     }
 
-    @PostMapping(".boardDelete")
+//    @PostMapping(".boardDelete")
+//    public String boardDelete(Board board) {
+//        boardService.boardDelete(board);
+//        return "redirect:/board/boardList";
+//    }
+
+    @PostMapping("/boardDelete")
     public String boardDelete(Board board) {
+        Board deleteData = boardService.getBoard(board.getNo());
+        if(deleteData.getFilename()!= null ){
+            fileUtil.deleteFile(deleteData.getFilename());
+        }
         boardService.boardDelete(board);
         return "redirect:/board/boardList";
+    }
+
+    @ResponseBody
+    @GetMapping("/view/{fileName}")
+    public ResponseEntity<Resource> viewFileGET(@PathVariable String fileName) {
+        return fileUtil.getFile(fileName);
     }
 }

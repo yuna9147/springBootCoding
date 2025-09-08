@@ -12,7 +12,6 @@ import java.util.List;
 
 //엔티티클래스명, ID 필드 형식
 public interface BoardRepository extends JpaRepository<Board, Long> {
-    Board findByTitle(String title);
 
     List<Board> findByTitleContaining(String title);
     List<Board> findByNameContaining(String name);
@@ -26,6 +25,11 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     Page<Board> findAll(Pageable pageable);
     Page<Board> findByTitleContaining(String keyword, Pageable pageable);
 
+    Page<Board> findByNameContaining(String name, Pageable pageable);
+    Page<Board> findByContentContaining(String content, Pageable pageable);
+
+    Page<Board> findByRegDateBetween(LocalDateTime startDate, LocalDateTime endDate, Pageable pageable);
+
     @Query("SELECT b FROM Board b")
     public List<Board> boardList();
 
@@ -38,6 +42,8 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
 
     @Query(value = "SELECT no, name, title, content, hit, reg_date FROM boot_board ORDER BY no DESC",nativeQuery = true)
     public List<Board> boardAllList();
+
+
 }
 
 

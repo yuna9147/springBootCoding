@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 
@@ -43,4 +44,15 @@ public class Board {
 
     @ColumnDefault (value= "0")
     private Integer hit = 0;
+
+    @Transient
+    private MultipartFile file;
+
+    @Column
+    private String filename = "";
+
+    // @Column
+// private String thumbname   =""; 	// 실제서버에 저장할 썸네일 이미지 파일명
+
+
 }
