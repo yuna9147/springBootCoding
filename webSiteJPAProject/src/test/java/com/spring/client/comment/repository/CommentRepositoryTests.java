@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
+
 @SpringBootTest
 @Slf4j
 public class CommentRepositoryTests {
@@ -39,5 +41,17 @@ public class CommentRepositoryTests {
         log.info("comment 테이블에 세번째 데이터 입력");
         commentRepository.save(comment2);
 
+    }
+
+    @Test
+    public void commentListTest() {
+        List<Comment> commentList = commentRepository.articleNoCommentList(1L);
+        commentList.forEach(comment -> log.info(comment.toString()));
+    }
+
+    @Test
+    public void nicknameSelectTest(){
+        List<Comment> commentList = commentRepository.findByNickname("홍길동");
+        commentList.forEach(comment->log.info(comment.toString()));
     }
 }

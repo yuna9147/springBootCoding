@@ -64,3 +64,23 @@ const formFileSubmit = (selector, method, action) => {
     form.submit();
 }
 
+function getDateFormat(dateValue) {
+    const year = dateValue.getFullYear();
+    const month = String(dateValue.getMonth() + 1).padStart(2,'0');
+    const day = String(dateValue.getDate()).padStart(2,'0');
+
+    return `${year}-${month}-${day}`;
+}
+
+function checkForm(selector, message) {
+    const element = document.querySelector(selector);
+    const value = element.value.trim();
+
+    if (value === "" || value === "0") {
+        alert(`${message} 입력해 주세요.`);
+        element.value = "";
+        element.focus();
+        return false;
+    }
+    return true;
+}

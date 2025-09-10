@@ -3,16 +3,17 @@
       layout:decorate="~{template/client/layout/layout}">
 
 <th:block layout:fragment="content">
-    <div class="text-center"><h3>기사 리스트</h3></div>
-    <div class="board-table-height">
-        <table class="table table-hover">
+    <div class="text-center"><h3>게시판 리스트</h3></div>
+
+    <div class="article-table-height">
+        <table class="table">
             <thead>
             <tr class="text-center">
-                <th class="col-md-2">글번호</th>
-                <th class="col-md-4">글제목</th>
-                <th class="col-md-2">작성자</th>
-                <th class="col-md-3">등록일</th>
-                <th class="col-md-1">조회수</th>
+                <th scope="col">글번호</th>
+                <th scope="col">글제목</th>
+                <th scope="col">작성자</th>
+                <th scope="col">등록일</th>
+                <th scope="col">조회수</th>
             </tr>
             </thead>
             <tbody>
@@ -21,39 +22,23 @@
             </tr>
             <th:block th:if="${not #strings.isEmpty(articleList)}">
                 <tr class="text-center" th:each="article : ${articleList}" th:object="${article}"  th:data-no="*{no}">
-                    <td th:text="*{no}"></td>
-                    <td class="text-start"><a th:href="@{/article/} + *{no}" th:text="*{title}"
-                                              class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover goDetail"></a></td>
-                    <td class="name" th:text="*{name}"></td>
-                    <td class="date" th:text="*{#temporals.format(regDate, 'yyyy-MM-dd')}"></td>
+                    <th scope="row" th:text="*{no}"></th>
+                    <td class="text-start"><a th:href="@{/article/} + *{no}" th:text="*{title}" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"></a></td>
+                    <td th:text="*{name}"></td>
+                    <td th:text="*{#temporals.format(regDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
                     <td th:text="*{hit}"></td>
                 </tr>
             </th:block>
             </tbody>
         </table>
     </div>
+
     <div class="text-end">
         <button type="button" id="insertFormBtn" class="btn btn-primary btn-sm mb-2">글쓰기</button>
     </div>
-
-<!--    <nav aria-label="Page navigation example">-->
-<!--        <ul class="pagination justify-content-center">-->
-<!--            <li class="page-item" th:if="${articleList.prev}">-->
-<!--                <a th:data-number="${articleList.prevPage}" class="page-link" >Previous</a>-->
-<!--            </li>-->
-
-<!--            <li th:each="number : ${articleList.pageNumList}" th:classappend=" 'page-item ' + ${(articleList.current == number) ? 'active':''}">-->
-<!--                <a class="page-link" th:text="${number}" th:data-number="${number}"></a>-->
-<!--            </li>-->
-
-<!--            <li class="page-item" th:if="${articleList.next}">-->
-<!--                <a th:data-number="${articleList.nextPage}" class="page-link" >Next</a>-->
-<!--            </li>-->
-<!--        </ul>-->
-<!--    </nav>-->
 </th:block>
 
 <th:block layout:fragment="script">
-    <script src="/js/article/articleCommon.js"></script>
-    <script src="/js/article/articleList.js"></script>
+    <script src="/js/article/article.js"></script>
 </th:block>
+</html>

@@ -74,3 +74,13 @@ td[colspan="3"][th\\:utext] {
 .pagination {
     margin-top: 20px;
 }
+
+/* 일반 게시판 적용 스타일 */
+.article-table-height{ height:500px; }
+
+/* 댓글 적용 스타일 */
+.cdate{ font-size:12px; }
+.reply-count{ color:red; font-size:12px; }
+
+/* clone 대상 적용 스타일*/
+#item-template{display:none;}
