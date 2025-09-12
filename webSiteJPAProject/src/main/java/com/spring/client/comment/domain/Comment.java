@@ -2,20 +2,13 @@ package com.spring.client.comment.domain;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.spring.client.article.domain.Article;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,7 +23,8 @@ import lombok.ToString;
 
 @Setter
 @Getter
-@ToString
+//@ToString
+@ToString(exclude="article")
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -54,7 +48,8 @@ public class Comment {
     @ColumnDefault(value = "sysdate")
     private LocalDateTime cdate;
 
-    @ManyToOne // Comment 엔티티와 Article 엔티티를 다대일 관계로 설정
-    @JoinColumn(name="no")   // 외래키 생성, Article 엔티티의 기본키(no)와 매핑
+    @ManyToOne(fetch= FetchType.LAZY) // Comment 엔티티와 Article 엔티티를 다대일 관계로 설정
+    @JoinColumn(name="no", nullable=false)   // 외래키 생성, Article 엔티티의 기본키(no)와 매핑
+    @JsonBackReference  //순환 참조 방지
     private Article article; // 해당 댓글의 부모 게시글
 }

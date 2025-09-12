@@ -84,3 +84,7 @@ td[colspan="3"][th\\:utext] {
 
 /* clone 대상 적용 스타일*/
 #item-template{display:none;}
+
+#map{ height: 500px; }
+
+#media-template{ display:none;}

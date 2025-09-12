@@ -1,11 +1,12 @@
 package com.spring.openapi.data.controller;
 
 import com.spring.openapi.data.service.DataService;
+import com.spring.openapi.data.vo.AnimalDaejeonDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -26,4 +27,28 @@ public class DataController {
         return dataService.busanWalkingList();
     }
 
+    /* 부산도보여행정보 상세 화면 */
+    @GetMapping("/busanWalkingDetailView/{seq}")
+    public String busanWalkingDetailView(@PathVariable String seq, Model model){
+        model.addAttribute("seq", seq);
+        return "data/busanWalkingDetailView";
+    }
+
+    //http://localhost:8080/data/busanWalkingDetail/283
+    @ResponseBody
+    @GetMapping(value = "/busanWalkingDetail/{seq}", produces= MediaType.APPLICATION_JSON_VALUE)
+    public String busanWalkingDetail(@PathVariable String seq) throws Exception {
+        return dataService.busanWalkingDetail(seq);
+    }
+
+    @GetMapping("/animalDaejeonView")
+    public String animalDaejeonView(AnimalDaejeonDTO animalDaejeonDTO){
+        return "data/animalDaejeonView";
+    }
+
+    @ResponseBody
+    @PostMapping(value="/animalDaejeonList", consumes = "application/json", produces = "application/xml; charset=UTF-8")
+    public String animalDaejeonList(@RequestBody AnimalDaejeonDTO animalDaejeonDTO) {
+        return dataService.animalDaejeonList(animalDaejeonDTO);
+    }
 }
