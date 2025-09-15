@@ -50,6 +50,7 @@ public class DataServiceImpl implements DataService {
         }
     }
 
+
     private StringBuilder getAnimalDaejeonData(AnimalDaejeonDTO animalDaejeonDTO) {
         StringBuilder site = new StringBuilder("http://apis.data.go.kr/6300000/animalDaejeonService/animalDaejeonList");
         site.append("?serviceKey="+serviceKey);
@@ -62,4 +63,20 @@ public class DataServiceImpl implements DataService {
         //site.append("&searchKeyword=" + URLEncoder.encode("동물종구분", "UTF-8")); // 검색키워드 - 옵션(동물종구분,기타사항,등록번호등 검색키워드로 검색)
         return site;
     }
+
+    // 요청 url: http://localhost:8080/data/animalDaejeonItem?animalSeq=44348
+    @Override
+    public String animalDaejeonItem(AnimalDaejeonDTO animalDaejeonDTO)  {
+        try {
+            String baseUrl = "http://apis.data.go.kr/6300000/animalDaejeonService/animalDaejeonItem";
+            String params = String.format("?serviceKey=%s&animalSeq=%s", serviceKey, animalDaejeonDTO.getAnimalSeq());
+            String site = baseUrl + params;
+
+            OpenApiDTO openApi = new OpenApiDTO(site, "GET");
+            return URLConnectUtil.openAPIData(openApi).toString();
+        } catch (Exception e) {
+            return "API 호출 중 오류 발생";
+        }
+    }
+
 }

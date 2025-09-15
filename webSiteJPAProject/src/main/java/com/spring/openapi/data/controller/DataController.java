@@ -41,6 +41,7 @@ public class DataController {
         return dataService.busanWalkingDetail(seq);
     }
 
+    /* 대전 유기동물공고 리스트 화면 */
     @GetMapping("/animalDaejeonView")
     public String animalDaejeonView(AnimalDaejeonDTO animalDaejeonDTO){
         return "data/animalDaejeonView";
@@ -50,5 +51,18 @@ public class DataController {
     @PostMapping(value="/animalDaejeonList", consumes = "application/json", produces = "application/xml; charset=UTF-8")
     public String animalDaejeonList(@RequestBody AnimalDaejeonDTO animalDaejeonDTO) {
         return dataService.animalDaejeonList(animalDaejeonDTO);
+    }
+
+    /*유기동물공고현황 상세조회*/
+    @GetMapping(value="/animalDaejeonItemView/{animalSeq}")
+    public String animalDaejeonItemView(@PathVariable String animalSeq, AnimalDaejeonDTO animalDaejeonDTO,Model model){
+        model.addAttribute("animalSeq",animalSeq);
+        return "data/animalDaejeonItemView";
+    }
+
+    @ResponseBody
+    @PostMapping(value="/animalDaejeonItem", consumes = "application/json", produces = "application/xml; charset=UTF-8")
+    public String animalDaejeonItem(@RequestBody AnimalDaejeonDTO animalDaejeonDTO) throws Exception{
+        return dataService.animalDaejeonItem(animalDaejeonDTO);
     }
 }

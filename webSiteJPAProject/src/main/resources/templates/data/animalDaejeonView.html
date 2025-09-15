@@ -129,12 +129,13 @@
 
     // 버큰 클릭했을 때 상세 페이지로 이동
     document.addEventListener('click', function(e){
-        if (e.target.classList.contains("detailBtn")) {
-            e.preventDefault();
-            const animal = e.target.closest("div.animal-list");
-            const animalSeq = animal.dataset.seq;
-            locationProcess(`/data/animalDaejeonItemView/${animalSeq}`);
-        }
-    });
+			    if (e.target.classList.contains("detailBtn")) {
+			        e.preventDefault();
+			        const animal = e.target.closest("div.animal-list");
+			        const animalSeq = animal.dataset.seq;
+			        //locationProcess(`/data/animalDaejeonItemView/${animalSeq}`);
+			        formSubmit("animalSearch", "get", `/data/animalDaejeonItemView/${animalSeq}`);
+			    }
+			});
   </script>
 </th:block>
