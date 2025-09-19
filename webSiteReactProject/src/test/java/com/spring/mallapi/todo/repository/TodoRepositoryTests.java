@@ -31,6 +31,17 @@ public class TodoRepositoryTests {
         }
     }
 
+    @Test
+    public void testInsert2() {
+        for(int i= 101; i<=104; i++) {
+            Todo todo = Todo.builder()
+                    .title("Title...." + i)
+                    .dueDate(LocalDate.of(2025,9,17))
+                    .writer("user"+i).build();
+            todoRepository.save(todo);
+        }
+    }
+
     //데이터 수정
     @Test
     public void testRead() {
