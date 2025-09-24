@@ -1,5 +1,6 @@
 package com.spring.mallapi.todo.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.spring.common.dto.PageRequestDTO;
@@ -22,7 +23,15 @@ public class TodoController {
         return todoService.get(tno);
     }
 
+     /*@GetMapping("/list")
+    public PageResponseDTO<TodoDTO> list(PageRequestDTO pageRequestDTO ) {
+        return todoService.list(pageRequestDTO);
+    }*/
+
+
     @GetMapping("/list")
+   //@PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')") //임시권한설정
+    @PreAuthorize("hasRole('ROLE_ADMIN')") //임시권한설정
     public PageResponseDTO<TodoDTO> list(PageRequestDTO pageRequestDTO ) {
         return todoService.list(pageRequestDTO);
     }
